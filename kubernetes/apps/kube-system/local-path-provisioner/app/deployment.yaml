@@ -97,10 +97,16 @@ data:
           "node":"DEFAULT_PATH_FOR_NON_LISTED_NODES",
           "paths":["/var/local-path-provisioner"]
         }
-      ],
-      "setup": "#!/bin/sh\nset -eu\nmkdir -p \"$VOL_DIR\"",
-      "teardown": "#!/bin/sh\nset -eu\nrm -rf \"$VOL_DIR\""
+      ]
     }
+  setup: |-
+    #!/bin/sh
+    set -eu
+    mkdir -p "$VOL_DIR"
+  teardown: |-
+    #!/bin/sh
+    set -eu
+    rm -rf "$VOL_DIR"
   helperPod.yaml: |-
     apiVersion: v1
     kind: Pod
