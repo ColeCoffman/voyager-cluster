@@ -14,5 +14,5 @@ spec:
     - backendRefs:
         - name: gatus
           namespace: observability
-          port: 8080
+          port: 80
 
