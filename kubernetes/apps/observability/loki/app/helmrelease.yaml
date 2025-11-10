@@ -67,6 +67,16 @@ spec:
         enabled: true
         size: 50Gi
         storageClass: local-path
+      podSecurityContext:
+        fsGroup: 10001
+        runAsUser: 10001
+        runAsGroup: 10001
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: false
+        capabilities:
+          drop:
+            - ALL
     gateway:
       replicas: 0
     backend:
