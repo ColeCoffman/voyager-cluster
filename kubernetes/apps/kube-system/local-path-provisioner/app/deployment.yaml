@@ -90,12 +90,40 @@ data:
         }
       ],
       "setup": "#!/bin/sh\nset -eu\nmkdir -p \"$VOL_DIR\"",
-      "teardown": "#!/bin/sh\nset -eu\nrm -rf \"$VOL_DIR\"",
-      "helperPod": {
-        "image": "rancher/local-path-provisioner",
-        "tag": "v0.0.28"
-      }
+      "teardown": "#!/bin/sh\nset -eu\nrm -rf \"$VOL_DIR\""
     }
+  helperPod.yaml: |-
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: helper-pod
+    spec:
+      containers:
+      - name: helper-pod
+        image: rancher/local-path-provisioner:v0.0.28
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -c
+        args:
+        - |
+          set -eu
+          if [ "$1" = "setup" ]; then
+            mkdir -p "$VOL_DIR"
+          elif [ "$1" = "teardown" ]; then
+            rm -rf "$VOL_DIR"
+          fi
+        env:
+        - name: VOL_DIR
+          value: /data
+        volumeMounts:
+        - name: data
+          mountPath: /data
+      volumes:
+      - name: data
+        hostPath:
+          path: /var/local-path-provisioner
+      restartPolicy: Never
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
