@@ -14,7 +14,7 @@ spec:
       labels:
         app: local-path-provisioner
     spec:
-      serviceAccountName: local-path-provisioner
+      serviceAccountName: local-path-provisioner-service-account
       containers:
         - name: local-path-provisioner
           image: rancher/local-path-provisioner:v0.0.28
@@ -37,6 +37,12 @@ spec:
         - name: config-volume
           configMap:
             name: local-path-config
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: local-path-provisioner-service-account
+  namespace: kube-system
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -71,6 +77,9 @@ roleRef:
   kind: ClusterRole
   name: local-path-provisioner-role
 subjects:
+  - kind: ServiceAccount
+    name: local-path-provisioner-service-account
+    namespace: kube-system
   - kind: ServiceAccount
     name: local-path-provisioner
     namespace: kube-system
