@@ -67,7 +67,7 @@ spec:
         enabled: true
         size: 50Gi
         storageClass: local-path
-      podSecurityContext:
+      securityContext:
         fsGroup: 10001
         runAsUser: 10001
         runAsGroup: 10001
