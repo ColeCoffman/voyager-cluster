@@ -107,6 +107,7 @@ data:
     metadata:
       name: helper-pod
     spec:
+      serviceAccountName: local-path-provisioner-service-account
       containers:
       - name: helper-pod
         image: rancher/local-path-provisioner:v0.0.28
@@ -124,12 +125,12 @@ data:
           fi
         env:
         - name: VOL_DIR
-          value: /data
+          value: /local-path-provisioner
         volumeMounts:
-        - name: data
-          mountPath: /data
+        - name: local-path-storage
+          mountPath: /local-path-provisioner
       volumes:
-      - name: data
+      - name: local-path-storage
         hostPath:
           path: /var/local-path-provisioner
       restartPolicy: Never
