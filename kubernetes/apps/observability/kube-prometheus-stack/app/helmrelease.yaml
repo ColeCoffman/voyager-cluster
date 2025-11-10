@@ -6,7 +6,7 @@ metadata:
   name: kube-prometheus-stack
 spec:
   chartRef:
-    kind: OCIRepository
+    kind: HelmChart
     name: kube-prometheus-stack
   interval: 1h
   install:
@@ -77,4 +77,3 @@ spec:
     grafana:
       enabled: false
       forceDeployDashboards: true
-

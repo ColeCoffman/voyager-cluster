@@ -1,0 +1,13 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmChart
+metadata:
+  name: kube-prometheus-stack
+spec:
+  chart: kube-prometheus-stack
+  version: 77.6.0
+  sourceRef:
+    kind: HelmRepository
+    name: kube-prometheus-stack
+  interval: 15m
+

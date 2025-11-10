@@ -4,6 +4,6 @@ kind: Kustomization
 resources:
   - ./alertmanagerconfig.yaml
   - ./helmrelease.yaml
-  - ./ocirepository.yaml
+  - ./helmrepository.yaml
+  - ./helmchart.yaml
   - ./httproute.yaml
-
