@@ -1,0 +1,125 @@
+---
+clusterName: kubernetes
+
+talosVersion: "${talosVersion}"
+kubernetesVersion: "${kubernetesVersion}"
+
+endpoint: https://192.168.6.10:6443
+additionalApiServerCertSans: &sans
+  - "127.0.0.1"
+  - "192.168.6.10"
+additionalMachineCertSans: *sans
+
+clusterPodNets: ["10.42.0.0/16"]
+clusterSvcNets: ["10.43.0.0/16"]
+
+# Disable built-in CNI to use Cilium
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: "voyager-1"
+    ipAddress: "192.168.6.158"
+    installDisk: "/dev/sdb"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/4b3cd373a192c8469e859b7a0cfbed3ecc3577c4a2d346a37b0aeff9cd17cdb0
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "e4:54:e8:58:ff:aa"
+        dhcp: false
+        addresses:
+          - "192.168.6.158/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.6.1"
+        mtu: 1500
+        vip:
+          ip: "192.168.6.10"
+  - hostname: "voyager-2"
+    ipAddress: "192.168.6.234"
+    installDisk: "/dev/sda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/4b3cd373a192c8469e859b7a0cfbed3ecc3577c4a2d346a37b0aeff9cd17cdb0
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "14:b3:1f:1d:ec:86"
+        dhcp: false
+        addresses:
+          - "192.168.6.234/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.6.1"
+        mtu: 1500
+        vip:
+          ip: "192.168.6.10"
+  - hostname: "voyager-3"
+    ipAddress: "192.168.6.107"
+    installDisk: "/dev/sda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/4b3cd373a192c8469e859b7a0cfbed3ecc3577c4a2d346a37b0aeff9cd17cdb0
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "e4:b9:7a:fb:0f:0c"
+        dhcp: false
+        addresses:
+          - "192.168.6.107/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.6.1"
+        mtu: 1500
+        vip:
+          ip: "192.168.6.10"
+  - hostname: "voyager-4"
+    ipAddress: "192.168.6.37"
+    installDisk: "/dev/sda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/4b3cd373a192c8469e859b7a0cfbed3ecc3577c4a2d346a37b0aeff9cd17cdb0
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "b8:85:84:a1:62:a6"
+        dhcp: false
+        addresses:
+          - "192.168.6.37/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.6.1"
+        mtu: 1500
+  - hostname: "voyager-5"
+    ipAddress: "192.168.6.64"
+    installDisk: "/dev/sda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/4b3cd373a192c8469e859b7a0cfbed3ecc3577c4a2d346a37b0aeff9cd17cdb0
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "14:b3:1f:25:39:14"
+        dhcp: false
+        addresses:
+          - "192.168.6.64/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.6.1"
+        mtu: 1500
+
+# Global patches
+patches:
+  - "@./patches/global/machine-files.yaml"
+  - "@./patches/global/machine-kubelet.yaml"
+  - "@./patches/global/machine-network.yaml"
+  - "@./patches/global/machine-sysctls.yaml"
+  - "@./patches/global/machine-time.yaml"
+
+# Controller patches
+controlPlane:
+  patches:
+    - "@./patches/controller/cluster.yaml"
+

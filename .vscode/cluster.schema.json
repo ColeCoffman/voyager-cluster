@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "node_cidr": {
+      "type": "string",
+      "description": "The network CIDR for the nodes"
+    },
+    "node_dns_servers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "node_ntp_servers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "node_default_gateway": {
+      "type": "string"
+    },
+    "node_vlan_tag": {
+      "type": "string"
+    },
+    "cluster_pod_cidr": {
+      "type": "string"
+    },
+    "cluster_svc_cidr": {
+      "type": "string"
+    },
+    "cluster_api_addr": {
+      "type": "string"
+    },
+    "cluster_api_tls_sans": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "cluster_gateway_addr": {
+      "type": "string"
+    },
+    "cluster_dns_gateway_addr": {
+      "type": "string"
+    },
+    "repository_name": {
+      "type": "string"
+    },
+    "repository_branch": {
+      "type": "string"
+    },
+    "repository_visibility": {
+      "type": "string",
+      "enum": ["public", "private"]
+    },
+    "cloudflare_domain": {
+      "type": "string"
+    },
+    "cloudflare_token": {
+      "type": "string"
+    },
+    "cloudflare_gateway_addr": {
+      "type": "string"
+    },
+    "cilium_bgp_router_addr": {
+      "type": "string"
+    },
+    "cilium_bgp_router_asn": {
+      "type": "string"
+    },
+    "cilium_bgp_node_asn": {
+      "type": "string"
+    },
+    "cilium_loadbalancer_mode": {
+      "type": "string",
+      "enum": ["dsr", "snat"]
+    }
+  }
+}

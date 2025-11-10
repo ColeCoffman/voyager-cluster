@@ -13,6 +13,9 @@
     },
     "yaml.schemaStore.enable": true,
     "yaml.schemas": {
-        "kubernetes": "./kubernetes/**/*.yaml"
-    }
+        "kubernetes": "./kubernetes/**/*.yaml",
+        ".vscode/cluster.schema.json": ["cluster.yaml", "nodes.yaml"]
+    },
+    "yaml.validate": true,
+    "yaml.schemaDownload.enable": true
 }
