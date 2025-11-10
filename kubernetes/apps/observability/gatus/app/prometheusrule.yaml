@@ -1,0 +1,18 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: gatus
+spec:
+  groups:
+    - name: gatus
+      rules:
+        - alert: GatusEndpointDown
+          expr: gatus_endpoint_result_status_code{status="down"} == 1
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Gatus endpoint {{ $labels.endpoint }} is down"
+            description: "Endpoint {{ $labels.endpoint }} has been down for more than 5 minutes"
+

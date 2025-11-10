@@ -1,0 +1,14 @@
+endpoints:
+  - name: Kubernetes API
+    url: https://192.168.6.10:6443/healthz
+    conditions:
+      - "[STATUS] == 200"
+  - name: Grafana
+    url: https://grafana.sk8server.me/api/health
+    conditions:
+      - "[STATUS] == 200"
+  - name: Prometheus
+    url: https://prometheus.sk8server.me/-/healthy
+    conditions:
+      - "[STATUS] == 200"
+

@@ -1,0 +1,16 @@
+---
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: default
+spec:
+  route:
+    receiver: default
+    groupBy:
+      - alertname
+      - cluster
+      - service
+  receivers:
+    - name: default
+      webhookConfigs: []
+
