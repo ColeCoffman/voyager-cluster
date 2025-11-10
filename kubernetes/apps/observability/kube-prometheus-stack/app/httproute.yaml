@@ -13,5 +13,6 @@ spec:
   rules:
     - backendRefs:
         - name: kube-prometheus-stack-prometheus
+          namespace: observability
           port: 9090
 
