@@ -112,27 +112,6 @@ data:
       - name: helper-pod
         image: rancher/local-path-provisioner:v0.0.28
         imagePullPolicy: IfNotPresent
-        command:
-        - sh
-        - -c
-        args:
-        - |
-          set -eu
-          if [ "$1" = "setup" ]; then
-            mkdir -p "$VOL_DIR"
-          elif [ "$1" = "teardown" ]; then
-            rm -rf "$VOL_DIR"
-          fi
-        env:
-        - name: VOL_DIR
-          value: /local-path-provisioner
-        volumeMounts:
-        - name: local-path-storage
-          mountPath: /local-path-provisioner
-      volumes:
-      - name: local-path-storage
-        hostPath:
-          path: /var/local-path-provisioner
       restartPolicy: Never
 ---
 apiVersion: storage.k8s.io/v1
