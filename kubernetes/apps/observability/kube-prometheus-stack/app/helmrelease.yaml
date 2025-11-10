@@ -57,7 +57,9 @@ spec:
           fsGroup: 65534
           runAsUser: 65534
           runAsGroup: 65534
-        queryLogFile: ""
+        additionalArgs:
+          - --enable-feature=promql-at-modifier
+          - --query.lookback-delta=5m
         storageSpec:
           volumeClaimTemplate:
             spec:
