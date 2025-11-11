@@ -13,13 +13,11 @@ spec:
     crds: Skip
     remediation:
       retries: 3
-      retryInterval: 5m
   upgrade:
     cleanupOnFail: true
     crds: Skip
     remediation:
       retries: 3
-      retryInterval: 5m
   values:
     deploymentMode: SingleBinary
     loki:
