@@ -57,28 +57,8 @@ spec:
           fsGroup: 65534
           runAsUser: 65534
           runAsGroup: 65534
-        additionalVolumes:
-          - name: query-log-tmp
-            emptyDir: {}
-        additionalVolumeMounts:
-          - name: query-log-tmp
-            mountPath: /tmp/prometheus-queries
-        containers:
-          - name: prometheus
-            lifecycle:
-              postStart:
-                exec:
-                  command:
-                    - /bin/sh
-                    - -c
-                    - |
-                      # Create queries.active in writable /tmp and symlink it
-                      touch /tmp/prometheus-queries/queries.active
-                      chmod 666 /tmp/prometheus-queries/queries.active
-                      # Create symlink from /prometheus/queries.active to /tmp version
-                      # This must be done before Prometheus tries to open the file
-                      ln -sf /tmp/prometheus-queries/queries.active /prometheus/queries.active || true
         storageSpec:
+          disableMountSubPath: true
           volumeClaimTemplate:
             spec:
               storageClassName: local-path
