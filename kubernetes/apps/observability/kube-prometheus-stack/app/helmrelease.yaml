@@ -57,6 +57,23 @@ spec:
           fsGroup: 65534
           runAsUser: 65534
           runAsGroup: 65534
+        containers:
+          - name: prometheus
+            lifecycle:
+              postStart:
+                exec:
+                  command:
+                    - /bin/sh
+                    - -c
+                    - |
+                      # Create queries directory in /tmp and symlink it
+                      mkdir -p /tmp/prometheus-queries
+                      touch /tmp/prometheus-queries/queries.active
+                      chmod 666 /tmp/prometheus-queries/queries.active
+                      # Try to create symlink (may not work due to subPath)
+                      ln -sf /tmp/prometheus-queries/queries.active /prometheus/queries.active 2>/dev/null || true
+                      # If symlink fails, try to create the file directly with correct perms
+                      touch /prometheus/queries.active 2>/dev/null || chmod 777 /prometheus 2>/dev/null || true
         storageSpec:
           volumeClaimTemplate:
             spec:
