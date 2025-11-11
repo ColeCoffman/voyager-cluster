@@ -59,17 +59,10 @@ spec:
           runAsGroup: 65534
         containers:
           - name: prometheus
-            lifecycle:
-              postStart:
-                exec:
-                  command:
-                    - /bin/sh
-                    - -c
-                    - |
-                      # Create queries.active file in /tmp and symlink it
-                      touch /tmp/queries.active || true
-                      # Try to fix permissions on /prometheus if possible
-                      chmod -R 777 /prometheus 2>/dev/null || true
+            args:
+              - --query.max-concurrency=20
+              - --query.max-samples=50000000
+              - --query.lookback-delta=5m
         storageSpec:
           volumeClaimTemplate:
             spec:

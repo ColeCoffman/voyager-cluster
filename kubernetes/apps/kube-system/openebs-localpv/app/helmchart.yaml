@@ -1,0 +1,13 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmChart
+metadata:
+  name: openebs-localpv
+spec:
+  chart: localpv-provisioner
+  version: 4.3.0
+  sourceRef:
+    kind: HelmRepository
+    name: openebs
+  interval: 15m
+

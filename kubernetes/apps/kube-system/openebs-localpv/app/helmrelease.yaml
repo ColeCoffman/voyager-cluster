@@ -6,11 +6,8 @@ metadata:
   name: openebs-localpv
 spec:
   chartRef:
-    kind: HelmRepository
-    name: openebs
-  chart:
-    chart: localpv-provisioner
-    version: 4.3.0
+    kind: HelmChart
+    name: openebs-localpv
   interval: 1h
   install:
     remediation:
