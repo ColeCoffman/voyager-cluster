@@ -104,8 +104,11 @@ data:
     set -eu
     mkdir -p "$VOL_DIR"
     # Set permissions to allow fsGroup to work properly
-    # This allows pods with fsGroup to write to the volume
+    # Make directory world-writable with sticky bit for fsGroup support
     chmod 1777 "$VOL_DIR" || true
+    # Also ensure subdirectories created later will inherit permissions
+    # This helps with subPath volumes used by Prometheus
+    find "$VOL_DIR" -type d -exec chmod 1777 {} \; 2>/dev/null || true
   teardown: |-
     #!/bin/sh
     set -eu
