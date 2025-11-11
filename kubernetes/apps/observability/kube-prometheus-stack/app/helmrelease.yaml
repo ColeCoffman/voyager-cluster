@@ -58,8 +58,10 @@ spec:
           runAsUser: 65534
           runAsGroup: 65534
         additionalArgs:
-          - --query.max-concurrency=20
-          - --query.max-samples=50000000
+          - name: query.max-concurrency
+            value: "20"
+          - name: query.max-samples
+            value: "50000000"
         storageSpec:
           volumeClaimTemplate:
             spec:
