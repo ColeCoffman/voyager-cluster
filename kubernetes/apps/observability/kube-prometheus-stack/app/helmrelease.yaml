@@ -57,6 +57,8 @@ spec:
           fsGroup: 65534
           runAsUser: 65534
           runAsGroup: 65534
+        query:
+          queryLogFile: /tmp/queries.active
         storageSpec:
           volumeClaimTemplate:
             spec:
