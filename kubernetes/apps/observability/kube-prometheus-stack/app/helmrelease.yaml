@@ -57,7 +57,19 @@ spec:
           fsGroup: 65534
           runAsUser: 65534
           runAsGroup: 65534
-        additionalScrapeConfigs: []
+        containers:
+          - name: prometheus
+            lifecycle:
+              postStart:
+                exec:
+                  command:
+                    - /bin/sh
+                    - -c
+                    - |
+                      # Create queries.active file in /tmp and symlink it
+                      touch /tmp/queries.active || true
+                      # Try to fix permissions on /prometheus if possible
+                      chmod -R 777 /prometheus 2>/dev/null || true
         storageSpec:
           volumeClaimTemplate:
             spec:
