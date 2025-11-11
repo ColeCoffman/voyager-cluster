@@ -63,9 +63,21 @@ spec:
         additionalVolumeMounts:
           - name: query-log-tmp
             mountPath: /tmp/prometheus-queries
-        env:
-          - name: QUERY_LOG_FILE
-            value: /tmp/prometheus-queries/queries.active
+        containers:
+          - name: prometheus
+            lifecycle:
+              postStart:
+                exec:
+                  command:
+                    - /bin/sh
+                    - -c
+                    - |
+                      # Create queries.active in writable /tmp and symlink it
+                      touch /tmp/prometheus-queries/queries.active
+                      chmod 666 /tmp/prometheus-queries/queries.active
+                      # Create symlink from /prometheus/queries.active to /tmp version
+                      # This must be done before Prometheus tries to open the file
+                      ln -sf /tmp/prometheus-queries/queries.active /prometheus/queries.active || true
         storageSpec:
           volumeClaimTemplate:
             spec:
