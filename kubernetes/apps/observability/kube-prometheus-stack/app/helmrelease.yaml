@@ -57,12 +57,10 @@ spec:
           fsGroup: 65534
           runAsUser: 65534
           runAsGroup: 65534
-        additionalVolumes:
-          - name: query-log-dir
-            emptyDir: {}
-        additionalVolumeMounts:
-          - name: query-log-dir
-            mountPath: /prometheus/queries
+        containers:
+          - name: prometheus
+            args:
+              - --query.active-query-tracker-file=/tmp/queries.active
         storageSpec:
           volumeClaimTemplate:
             spec:
