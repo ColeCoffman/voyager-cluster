@@ -57,27 +57,6 @@ spec:
           fsGroup: 65534
           runAsUser: 65534
           runAsGroup: 65534
-        initContainers:
-          - name: fix-permissions
-            image: busybox:1.36
-            securityContext:
-              runAsUser: 0
-              runAsGroup: 0
-            command:
-              - sh
-              - -c
-              - |
-                # Fix permissions on the prometheus-db subPath directory
-                chown -R 65534:65534 /prometheus || true
-                chmod -R 1777 /prometheus || true
-                # Create queries.active file with correct permissions
-                touch /prometheus/queries.active || true
-                chown 65534:65534 /prometheus/queries.active || true
-                chmod 666 /prometheus/queries.active || true
-            volumeMounts:
-              - name: prometheus-kube-prometheus-stack-db
-                mountPath: /prometheus
-                subPath: prometheus-db
         storageSpec:
           volumeClaimTemplate:
             spec:
