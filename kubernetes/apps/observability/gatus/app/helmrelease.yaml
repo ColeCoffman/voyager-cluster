@@ -49,6 +49,7 @@ spec:
               GATUS_DELAY_START_SECONDS: 5
               GATUS_WEB_PORT: &port 8080
               TZ: America/New_York
+              SSL_CERT_FILE: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
             probes:
               liveness: &probes
                 enabled: true
