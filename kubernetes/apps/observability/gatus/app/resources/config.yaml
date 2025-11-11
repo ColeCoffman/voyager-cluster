@@ -1,6 +1,9 @@
 endpoints:
   - name: Kubernetes API
     url: https://kubernetes.default.svc:443/healthz
+    client:
+      tls:
+        ca-certificate-file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
     conditions:
       - "[STATUS] == 200"
   - name: Grafana
