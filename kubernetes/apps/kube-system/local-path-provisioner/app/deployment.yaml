@@ -106,9 +106,13 @@ data:
     # Set permissions to allow fsGroup to work properly
     # Make directory world-writable with sticky bit for fsGroup support
     chmod 1777 "$VOL_DIR" || true
-    # Also ensure subdirectories created later will inherit permissions
-    # This helps with subPath volumes used by Prometheus
+    # Create common subPath directories that might be used (like prometheus-db)
+    # and set permissions so fsGroup works with subPaths
+    mkdir -p "$VOL_DIR/prometheus-db" || true
+    chmod -R 1777 "$VOL_DIR" || true
+    # Ensure all subdirectories have correct permissions
     find "$VOL_DIR" -type d -exec chmod 1777 {} \; 2>/dev/null || true
+    find "$VOL_DIR" -type f -exec chmod 0666 {} \; 2>/dev/null || true
   teardown: |-
     #!/bin/sh
     set -eu
@@ -120,10 +124,20 @@ data:
       name: helper-pod
     spec:
       serviceAccountName: local-path-provisioner-service-account
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
       containers:
       - name: helper-pod
         image: rancher/local-path-provisioner:v0.0.28
         imagePullPolicy: IfNotPresent
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+          capabilities:
+            add:
+              - CHOWN
+              - FOWNER
       restartPolicy: Never
 ---
 apiVersion: storage.k8s.io/v1

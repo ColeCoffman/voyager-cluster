@@ -31,7 +31,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: openebs-hostpath
+              storageClassName: local-path
               resources:
                 requests:
                   storage: 1Gi
@@ -57,10 +57,11 @@ spec:
           fsGroup: 65534
           runAsUser: 65534
           runAsGroup: 65534
+        additionalScrapeConfigs: []
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: openebs-hostpath
+              storageClassName: local-path
               resources:
                 requests:
                   storage: 50Gi
