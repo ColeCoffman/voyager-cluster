@@ -57,12 +57,9 @@ spec:
           fsGroup: 65534
           runAsUser: 65534
           runAsGroup: 65534
-        additionalVolumes:
-          - name: query-log-dir
-            emptyDir: {}
-        additionalVolumeMounts:
-          - name: query-log-dir
-            mountPath: /prometheus/queries
+        additionalArgs:
+          - --query.max-concurrency=20
+          - --query.max-samples=50000000
         storageSpec:
           volumeClaimTemplate:
             spec:

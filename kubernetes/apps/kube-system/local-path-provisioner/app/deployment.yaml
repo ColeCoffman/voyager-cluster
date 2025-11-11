@@ -103,6 +103,9 @@ data:
     #!/bin/sh
     set -eu
     mkdir -p "$VOL_DIR"
+    # Set permissions to allow fsGroup to work properly
+    # This allows pods with fsGroup to write to the volume
+    chmod 1777 "$VOL_DIR" || true
   teardown: |-
     #!/bin/sh
     set -eu
