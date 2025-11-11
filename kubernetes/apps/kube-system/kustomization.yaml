@@ -12,5 +12,6 @@ resources:
   - ./coredns/ks.yaml
   - ./local-path-provisioner/ks.yaml
   - ./metrics-server/ks.yaml
+  - ./openebs-localpv/ks.yaml
   - ./reloader/ks.yaml
   - ./spegel/ks.yaml

@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: openebs-localpv
+spec:
+  chartRef:
+    kind: HelmRepository
+    name: openebs
+  chart:
+    chart: localpv-provisioner
+    version: 4.3.0
+  interval: 1h
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    localpv:
+      basePath: /var/openebs/local
+      storageClass:
+        isDefaultClass: false
+        name: openebs-hostpath
+        reclaimPolicy: Delete
+
