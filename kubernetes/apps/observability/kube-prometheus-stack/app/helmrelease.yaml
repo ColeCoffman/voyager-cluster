@@ -57,8 +57,12 @@ spec:
           fsGroup: 65534
           runAsUser: 65534
           runAsGroup: 65534
-        query:
-          queryLogFile: /tmp/queries.active
+        containers:
+          - name: prometheus
+            args:
+              - --query.max-concurrency=20
+              - --query.max-samples=50000000
+              - --query.lookback-delta=5m
         storageSpec:
           volumeClaimTemplate:
             spec:
