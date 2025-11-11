@@ -103,20 +103,21 @@ data:
     #!/bin/sh
     set -eu
     mkdir -p "$VOL_DIR"
-    # Set permissions to allow fsGroup to work properly
-    # Make directory world-writable with sticky bit for fsGroup support
-    chmod 1777 "$VOL_DIR" || true
     # Create common subPath directories that might be used (like prometheus-db)
-    # and set permissions so fsGroup works with subPaths
     # This is critical for Prometheus which uses subPath: prometheus-db
     mkdir -p "$VOL_DIR/prometheus-db" || true
     # Set ownership to nobody:nogroup (65534:65534) which is what Prometheus uses
+    # This must be done BEFORE setting permissions for chown to work
     chown -R 65534:65534 "$VOL_DIR" 2>/dev/null || true
     # Set permissions: directories 1777 (world writable with sticky bit), files 0666
+    # Use 1777 (not 777) to allow fsGroup to work with subPath mounts
     chmod -R 1777 "$VOL_DIR" 2>/dev/null || true
     find "$VOL_DIR" -type f -exec chmod 0666 {} \; 2>/dev/null || true
     # Ensure all subdirectories have correct permissions recursively
     find "$VOL_DIR" -type d -exec chmod 1777 {} \; 2>/dev/null || true
+    # Explicitly fix prometheus-db subdirectory permissions
+    chown -R 65534:65534 "$VOL_DIR/prometheus-db" 2>/dev/null || true
+    chmod -R 1777 "$VOL_DIR/prometheus-db" 2>/dev/null || true
   teardown: |-
     #!/bin/sh
     set -eu

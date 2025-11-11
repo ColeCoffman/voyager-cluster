@@ -60,7 +60,9 @@ spec:
         containers:
           - name: prometheus
             args:
-              - --query.active-query-tracker-file=/tmp/queries.active
+              - --query.max-concurrency=20
+              - --query.max-samples=50000000
+              - --query.lookback-delta=5m
         storageSpec:
           volumeClaimTemplate:
             spec:
