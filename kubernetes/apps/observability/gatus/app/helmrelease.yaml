@@ -22,6 +22,34 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
+          init-ca-bundle:
+            image:
+              repository: debian
+              tag: bookworm-slim
+            command:
+              - /bin/bash
+              - -c
+              - |
+                # Copy system CA bundle (Debian/Ubuntu location)
+                if [ -f /etc/ssl/certs/ca-certificates.crt ]; then
+                  cp /etc/ssl/certs/ca-certificates.crt /config/ca-bundle.crt
+                else
+                  # Fallback: create empty file if CA bundle not found
+                  touch /config/ca-bundle.crt
+                fi
+                # Append Kubernetes CA certificate
+                if [ -f /var/run/secrets/kubernetes.io/serviceaccount/ca.crt ]; then
+                  echo "" >> /config/ca-bundle.crt
+                  cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt >> /config/ca-bundle.crt
+                fi
+            volumeMounts:
+              - name: config
+                mountPath: /config
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 64Mi
           init-config:
             image:
               repository: ghcr.io/home-operations/k8s-sidecar
@@ -49,7 +77,7 @@ spec:
               GATUS_DELAY_START_SECONDS: 5
               GATUS_WEB_PORT: &port 8080
               TZ: America/New_York
-              SSL_CERT_FILE: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+              SSL_CERT_FILE: /config/ca-bundle.crt
             probes:
               liveness: &probes
                 enabled: true
