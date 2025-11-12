@@ -1,5 +1,5 @@
-# Example Woodpecker CI Pipeline for Next.js
-# Copy this to your Next.js repository as .woodpecker.yml
+# Secure Woodpecker CI Pipeline using Kaniko (No Privileged Access Required)
+# This is more secure than using the Docker plugin
 
 when:
   event:
@@ -53,19 +53,22 @@ steps:
         - push
         - pull_request
 
-  # Build and push Docker image (for main branch only)
+  # Build and push Docker image using Kaniko (secure, no privileged access)
   docker-build:
-    image: plugins/docker
-    settings:
-      repo: ghcr.io/your-username/your-nextjs-app
-      tags:
-        - latest
-        - ${CI_COMMIT_SHA:0:7}
-        - ${CI_COMMIT_BRANCH}
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
+    image: gcr.io/kaniko-project/executor:latest
+    commands:
+      - mkdir -p /kaniko/.docker
+      - echo "{\"auths\":{\"ghcr.io\":{\"auth\":\"$(echo -n $${DOCKER_USERNAME}:$${DOCKER_PASSWORD} | base64)\"}}}" > /kaniko/.docker/config.json
+      - /kaniko/executor
+          --context=.
+          --dockerfile=Dockerfile
+          --destination=ghcr.io/your-username/your-nextjs-app:${CI_COMMIT_SHA:0:7}
+          --destination=ghcr.io/your-username/your-nextjs-app:latest
+          --cache=true
+          --cache-ttl=24h
+    secrets:
+      - docker_username
+      - docker_password
     depends_on:
       - build
     when:
@@ -74,3 +77,4 @@ steps:
       branch:
         - main
         - master
+
