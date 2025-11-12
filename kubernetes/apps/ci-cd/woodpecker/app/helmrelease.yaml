@@ -19,6 +19,10 @@ spec:
         WOODPECKER_HOST: "https://woodpecker.sk8server.me"
         WOODPECKER_GITHUB_SCOPE: "repo,user:email,read:org"
         WOODPECKER_GITHUB: "true"
+        # Enable open registration (users can sign up)
+        WOODPECKER_OPEN: "true"
+        # Optional: Set admin users (comma-separated GitHub usernames)
+        # WOODPECKER_ADMIN: "your-github-username"
       envFrom:
         - secretRef:
             name: woodpecker-secrets
