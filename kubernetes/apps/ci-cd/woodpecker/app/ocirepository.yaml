@@ -6,7 +6,10 @@ metadata:
   namespace: ci-cd
 spec:
   interval: 1h
-  url: oci://ghcr.io/woodpecker-ci/helm
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  url: oci://ghcr.io/woodpecker-ci/helm/woodpecker
   ref:
     semver: ">=1.0.0"
 
