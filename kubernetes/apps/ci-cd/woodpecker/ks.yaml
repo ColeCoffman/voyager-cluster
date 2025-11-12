@@ -13,6 +13,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
+      namespace: flux-system
   interval: 1h
   path: ./kubernetes/apps/ci-cd/woodpecker/app
   prune: true
