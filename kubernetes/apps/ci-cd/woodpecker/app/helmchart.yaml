@@ -1,0 +1,15 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmChart
+metadata:
+  name: woodpecker
+  namespace: ci-cd
+spec:
+  chart: woodpecker
+  interval: 1h
+  sourceRef:
+    kind: HelmRepository
+    name: woodpecker
+    namespace: ci-cd
+  version: ">=1.0.0"
+
