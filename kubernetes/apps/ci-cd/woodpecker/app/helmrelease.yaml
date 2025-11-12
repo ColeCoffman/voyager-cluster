@@ -5,13 +5,10 @@ metadata:
   name: woodpecker
   namespace: ci-cd
 spec:
-  chart:
-    spec:
-      chart: woodpecker
-      sourceRef:
-        kind: HelmRepository
-        name: woodpecker
-      version: ">=1.0.0"
+  chartRef:
+    kind: HelmChart
+    name: woodpecker
+    namespace: ci-cd
   releaseName: woodpecker
   interval: 1h
   values:
