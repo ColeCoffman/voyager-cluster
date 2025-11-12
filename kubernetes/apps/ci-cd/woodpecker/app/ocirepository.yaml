@@ -6,7 +6,7 @@ metadata:
   namespace: ci-cd
 spec:
   interval: 1h
-  url: oci://ghcr.io/woodpecker-ci/helm-charts/woodpecker
+  url: oci://ghcr.io/woodpecker-ci/helm
   ref:
     semver: ">=1.0.0"
 

@@ -4,8 +4,7 @@ kind: Kustomization
 namespace: ci-cd
 
 resources:
-  - ./helmrepository.yaml
-  - ./helmchart.yaml
+  - ./ocirepository.yaml
   - ./secret.sops.yaml
   - ./helmrelease.yaml
   - ./httproute.yaml
