@@ -9,12 +9,12 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   interval: 1h
   path: ./kubernetes/apps/ci-cd/woodpecker/app
-  postBuild:
-    substituteFrom:
-      - kind: Secret
-        name: woodpecker-secrets
   prune: true
   retryInterval: 2m
   sourceRef:
