@@ -19,19 +19,20 @@ spec:
         WOODPECKER_HOST: "https://woodpecker.sk8server.me"
         WOODPECKER_GITHUB_SCOPE: "repo,user:email,read:org"
         WOODPECKER_GITHUB: "true"
-        WOODPECKER_GITHUB_CLIENT:
+      envFrom:
+        - secretRef:
+            name: woodpecker-secrets
+      extraEnv:
+        - name: WOODPECKER_GITHUB_CLIENT
           valueFrom:
             secretKeyRef:
               name: woodpecker-secrets
               key: WOODPECKER_GITHUB_CLIENT
-        WOODPECKER_GITHUB_SECRET:
+        - name: WOODPECKER_GITHUB_SECRET
           valueFrom:
             secretKeyRef:
               name: woodpecker-secrets
               key: WOODPECKER_GITHUB_SECRET
-      envFrom:
-        - secretRef:
-            name: woodpecker-secrets
       service:
         type: ClusterIP
         port: 8000
