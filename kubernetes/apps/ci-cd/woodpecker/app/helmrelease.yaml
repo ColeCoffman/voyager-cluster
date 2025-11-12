@@ -16,7 +16,7 @@ spec:
     server:
       replicas: 1
       env:
-        WOODPECKER_HOST: "woodpecker.sk8server.me"
+        WOODPECKER_HOST: "https://woodpecker.sk8server.me"
         WOODPECKER_GITHUB_SCOPE: "repo,user:email,read:org"
         WOODPECKER_FORGE_GITEA: false
         WOODPECKER_FORGE_GITHUB: true
