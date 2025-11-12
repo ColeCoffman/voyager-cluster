@@ -21,6 +21,8 @@ spec:
         WOODPECKER_GITHUB: "true"
         # Set admin users (comma-separated GitHub usernames)
         WOODPECKER_ADMIN: "ColeCoffman"
+        # Enable privileged plugins (required for Docker plugin)
+        WOODPECKER_PLUGINS_PRIVILEGED: "plugins/docker,plugins/docker:*"
       envFrom:
         - secretRef:
             name: woodpecker-secrets

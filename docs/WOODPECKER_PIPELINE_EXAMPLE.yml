@@ -1,0 +1,77 @@
+# Example Woodpecker CI Pipeline for Next.js
+# Copy this to your Next.js repository as .woodpecker.yml
+
+when:
+  event:
+    - push
+    - pull_request
+
+steps:
+  # Install dependencies
+  install:
+    image: node:20-alpine
+    commands:
+      - npm ci
+    when:
+      event:
+        - push
+        - pull_request
+
+  # Run linting
+  lint:
+    image: node:20-alpine
+    commands:
+      - npm run lint
+    depends_on:
+      - install
+    when:
+      event:
+        - push
+        - pull_request
+
+  # Run tests
+  test:
+    image: node:20-alpine
+    commands:
+      - npm run test
+    depends_on:
+      - install
+    when:
+      event:
+        - push
+        - pull_request
+
+  # Build the application
+  build:
+    image: node:20-alpine
+    commands:
+      - npm run build
+    depends_on:
+      - install
+    when:
+      event:
+        - push
+        - pull_request
+
+  # Build and push Docker image (for main branch only)
+  docker-build:
+    image: plugins/docker
+    settings:
+      repo: ghcr.io/your-username/your-nextjs-app
+      tags:
+        - latest
+        - ${CI_COMMIT_SHA:0:7}
+        - ${CI_COMMIT_BRANCH}
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    depends_on:
+      - build
+    when:
+      event:
+        - push
+      branch:
+        - main
+        - master
+
