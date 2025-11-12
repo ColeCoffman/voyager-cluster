@@ -22,17 +22,10 @@ spec:
       envFrom:
         - secretRef:
             name: woodpecker-secrets
-      extraEnv:
-        - name: WOODPECKER_GITHUB_CLIENT
-          valueFrom:
-            secretKeyRef:
-              name: woodpecker-secrets
-              key: WOODPECKER_GITHUB_CLIENT
-        - name: WOODPECKER_GITHUB_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: woodpecker-secrets
-              key: WOODPECKER_GITHUB_SECRET
+      # Override the default agent secret to use our custom secret
+      agentSecret:
+        existingSecret: woodpecker-secrets
+        existingSecretKey: WOODPECKER_AGENT_SECRET
       service:
         type: ClusterIP
         port: 8000
