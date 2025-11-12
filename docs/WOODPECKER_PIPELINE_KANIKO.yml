@@ -66,6 +66,8 @@ steps:
           --destination=ghcr.io/your-username/your-nextjs-app:latest
           --cache=true
           --cache-ttl=24h
+          --snapshot-mode=redo
+          --use-new-run
     secrets:
       - docker_username
       - docker_password

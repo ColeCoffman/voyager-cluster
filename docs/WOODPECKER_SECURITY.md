@@ -5,10 +5,11 @@
 ### What are Privileged Plugins?
 
 Privileged plugins in Woodpecker CI have elevated permissions, typically allowing them to:
-- Access the Docker daemon (for building/pushing images)
-- Mount host filesystems
-- Access sensitive system resources
-- Run with elevated capabilities
+
+-   Access the Docker daemon (for building/pushing images)
+-   Mount host filesystems
+-   Access sensitive system resources
+-   Run with elevated capabilities
 
 ### Security Risks
 
@@ -20,9 +21,10 @@ Privileged plugins in Woodpecker CI have elevated permissions, typically allowin
 ### The Docker Plugin Specifically
 
 The `plugins/docker` plugin needs privileged access because it:
-- Connects to the Docker daemon (usually via `/var/run/docker.sock`)
-- Builds Docker images
-- Pushes images to registries
+
+-   Connects to the Docker daemon (usually via `/var/run/docker.sock`)
+-   Builds Docker images
+-   Pushes images to registries
 
 This requires access that could be used maliciously if your repository is compromised.
 
@@ -34,30 +36,31 @@ Kaniko builds Docker images without requiring Docker daemon access:
 
 ```yaml
 docker-build:
-  image: gcr.io/kaniko-project/executor:latest
-  commands:
-    - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"ghcr.io\":{\"auth\":\"$(echo -n $DOCKER_USERNAME:$DOCKER_PASSWORD | base64)\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor
-        --context=.
-        --dockerfile=Dockerfile
-        --destination=ghcr.io/your-username/your-app:${CI_COMMIT_SHA:0:7}
-        --destination=ghcr.io/your-username/your-app:latest
-  secrets:
-    - docker_username
-    - docker_password
-  when:
-    event:
-      - push
-    branch:
-      - main
+    image: gcr.io/kaniko-project/executor:latest
+    commands:
+        - mkdir -p /kaniko/.docker
+        - echo "{\"auths\":{\"ghcr.io\":{\"auth\":\"$(echo -n $DOCKER_USERNAME:$DOCKER_PASSWORD | base64)\"}}}" > /kaniko/.docker/config.json
+        - /kaniko/executor
+          --context=.
+          --dockerfile=Dockerfile
+          --destination=ghcr.io/your-username/your-app:${CI_COMMIT_SHA:0:7}
+          --destination=ghcr.io/your-username/your-app:latest
+    secrets:
+        - docker_username
+        - docker_password
+    when:
+        event:
+            - push
+        branch:
+            - main
 ```
 
 **Benefits:**
-- No privileged access required
-- Runs in user namespace
-- More secure container isolation
-- Same functionality as Docker plugin
+
+-   No privileged access required
+-   Runs in user namespace
+-   More secure container isolation
+-   Same functionality as Docker plugin
 
 ### Option 2: Use Buildah
 
@@ -65,19 +68,20 @@ Buildah is another rootless container build tool:
 
 ```yaml
 docker-build:
-  image: quay.io/buildah/stable:latest
-  commands:
-    - buildah login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD ghcr.io
-    - buildah bud -t ghcr.io/your-username/your-app:${CI_COMMIT_SHA:0:7} .
-    - buildah push ghcr.io/your-username/your-app:${CI_COMMIT_SHA:0:7}
-  secrets:
-    - docker_username
-    - docker_password
+    image: quay.io/buildah/stable:latest
+    commands:
+        - buildah login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD ghcr.io
+        - buildah bud -t ghcr.io/your-username/your-app:${CI_COMMIT_SHA:0:7} .
+        - buildah push ghcr.io/your-username/your-app:${CI_COMMIT_SHA:0:7}
+    secrets:
+        - docker_username
+        - docker_password
 ```
 
 ### Option 3: Use Trusted Repositories Only
 
 If you must use the Docker plugin:
+
 1. Only enable privileged plugins for trusted repositories
 2. Use repository-level settings instead of global
 3. Limit which repositories can use privileged plugins
@@ -104,4 +108,3 @@ If you must use the Docker plugin:
 ## Recommendation
 
 **Use Kaniko instead of the privileged Docker plugin** - it provides the same functionality without the security risks.
-
