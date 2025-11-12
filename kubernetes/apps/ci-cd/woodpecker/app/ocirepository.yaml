@@ -1,0 +1,12 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: woodpecker
+  namespace: ci-cd
+spec:
+  interval: 1h
+  url: oci://ghcr.io/woodpecker-ci/helm-charts
+  ref:
+    semver: ">=1.0.0"
+
