@@ -4,27 +4,29 @@ This guide explains how to set up a GUI-based CI/CD pipeline for your Next.js ap
 
 ## 🎯 What You'll Get
 
-- **Web GUI** to see builds, logs, and pipeline status
-- **Auto-deploy on git push** to main branch
-- **PR previews** - automatic preview environments for pull requests
-- **Build history** - see all your builds in one place
-- **Simple setup** - no complex configuration needed
+-   **Web GUI** to see builds, logs, and pipeline status
+-   **Auto-deploy on git push** to main branch
+-   **PR previews** - automatic preview environments for pull requests
+-   **Build history** - see all your builds in one place
+-   **Simple setup** - no complex configuration needed
 
 ## 🏆 Recommended Solution: Woodpecker CI
 
 **Why Woodpecker CI?**
-- ✅ Modern, lightweight, and Kubernetes-native
-- ✅ Beautiful web GUI (similar to Drone CI)
-- ✅ Simple YAML-based pipelines (like GitHub Actions)
-- ✅ Runs entirely in your cluster
-- ✅ Great for beginners
-- ✅ Supports PR previews out of the box
-- ✅ Free and open source
+
+-   ✅ Modern, lightweight, and Kubernetes-native
+-   ✅ Beautiful web GUI (similar to Drone CI)
+-   ✅ Simple YAML-based pipelines (like GitHub Actions)
+-   ✅ Runs entirely in your cluster
+-   ✅ Great for beginners
+-   ✅ Supports PR previews out of the box
+-   ✅ Free and open source
 
 **Alternative: Jenkins**
-- More established, but heavier and more complex
-- Better if you need enterprise features
-- More plugins available
+
+-   More established, but heavier and more complex
+-   Better if you need enterprise features
+-   More plugins available
 
 ## Architecture Overview
 
@@ -65,9 +67,10 @@ This guide explains how to set up a GUI-based CI/CD pipeline for your Next.js ap
 5. **App live** → Your Next.js app is running!
 
 For PRs:
-- Same process, but creates a preview environment
-- Preview URL: `pr-123.your-app.sk8server.me`
-- Auto-cleanup when PR is closed
+
+-   Same process, but creates a preview environment
+-   Preview URL: `pr-123.your-app.sk8server.me`
+-   Auto-cleanup when PR is closed
 
 ## Setup Steps
 
@@ -89,16 +92,16 @@ Set up Flux Image Automation to watch for new images and deploy automatically.
 
 ## What You'll See in the GUI
 
-- **Dashboard** - Overview of all builds
-- **Pipeline View** - Step-by-step build progress
-- **Logs** - Real-time build logs
-- **Build History** - Past builds and their status
-- **Repository Settings** - Configure build triggers
+-   **Dashboard** - Overview of all builds
+-   **Pipeline View** - Step-by-step build progress
+-   **Logs** - Real-time build logs
+-   **Build History** - Past builds and their status
+-   **Repository Settings** - Configure build triggers
 
 ## Next Steps
 
 See the implementation files:
-- `kubernetes/apps/ci-cd/woodpecker/` - Woodpecker CI deployment
-- Example `.woodpecker.yml` for Next.js
-- Flux Image Automation configuration
 
+-   `kubernetes/apps/ci-cd/woodpecker/` - Woodpecker CI deployment
+-   Example `.woodpecker.yml` for Next.js
+-   Flux Image Automation configuration

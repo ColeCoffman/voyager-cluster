@@ -24,6 +24,9 @@ spec:
         WOODPECKER_FORGE_GITEA: false
         WOODPECKER_FORGE_GITHUB: true
         WOODPECKER_PULL_REQUEST_EVENTS: true
+      service:
+        type: ClusterIP
+        port: 8000
       resources:
         requests:
           cpu: 100m
@@ -36,7 +39,7 @@ spec:
     agent:
       replicas: 2
       env:
-        WOODPECKER_SERVER: "woodpecker-server:9000"
+        WOODPECKER_SERVER: "woodpecker-server:8000"
         WOODPECKER_AGENT_SECRET: "${WOODPECKER_AGENT_SECRET}"
         WOODPECKER_BACKEND: "kubernetes"
         WOODPECKER_BACKEND_K8S_NAMESPACE: "ci-cd"
@@ -49,20 +52,7 @@ spec:
           cpu: 2000m
           memory: 2Gi
 
-    # Ingress configuration
+    # Disable ingress - we're using HTTPRoute instead
     ingress:
-      enabled: true
-      className: "envoy"
-      annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-prod"
-        external-dns.alpha.kubernetes.io/hostname: "woodpecker.sk8server.me"
-      hosts:
-        - host: woodpecker.sk8server.me
-          paths:
-            - path: /
-              pathType: Prefix
-      tls:
-        - secretName: woodpecker-tls
-          hosts:
-            - woodpecker.sk8server.me
+      enabled: false
 

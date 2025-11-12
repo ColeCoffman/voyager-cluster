@@ -11,26 +11,28 @@
 ## ✅ Recommended Solution: Woodpecker CI
 
 **Why Woodpecker CI?**
-- Modern, lightweight web GUI
-- Kubernetes-native (runs in your cluster)
-- Simple YAML pipelines (like GitHub Actions)
-- Perfect for Next.js apps
-- Free and open source
-- Great for beginners
+
+-   Modern, lightweight web GUI
+-   Kubernetes-native (runs in your cluster)
+-   Simple YAML pipelines (like GitHub Actions)
+-   Perfect for Next.js apps
+-   Free and open source
+-   Great for beginners
 
 ## 📦 What's Included
 
 ### Files Created
 
 1. **Woodpecker CI Deployment**
-   - `kubernetes/apps/ci-cd/woodpecker/` - Complete Flux deployment
-   - Includes server, agents, ingress, and secrets
+
+    - `kubernetes/apps/ci-cd/woodpecker/` - Complete Flux deployment
+    - Includes server, agents, ingress, and secrets
 
 2. **Documentation**
-   - `docs/QUICK_START.md` - 5-step quick setup
-   - `docs/WOODPECKER_SETUP_GUIDE.md` - Detailed setup guide
-   - `docs/NEXTJS_WOODPECKER_EXAMPLE.md` - Next.js app configuration
-   - `docs/CI_CD_SETUP.md` - Architecture overview
+    - `docs/QUICK_START.md` - 5-step quick setup
+    - `docs/WOODPECKER_SETUP_GUIDE.md` - Detailed setup guide
+    - `docs/NEXTJS_WOODPECKER_EXAMPLE.md` - Next.js app configuration
+    - `docs/CI_CD_SETUP.md` - Architecture overview
 
 ## 🏗️ How It Works
 
@@ -71,6 +73,7 @@
 ## 🔄 Workflow
 
 ### On Git Push to Main:
+
 1. Woodpecker detects push
 2. Builds Next.js app
 3. Creates Docker image
@@ -79,6 +82,7 @@
 6. Auto-deploys to production
 
 ### On Pull Request:
+
 1. Woodpecker detects PR
 2. Builds with PR-specific tag
 3. Creates preview environment
@@ -88,32 +92,32 @@
 ## 🎨 GUI Features
 
 In the Woodpecker web UI you'll see:
-- **Dashboard** - All repositories and builds
-- **Build History** - Past builds with status
-- **Real-time Logs** - Watch builds as they happen
-- **Pipeline View** - Step-by-step progress
-- **Repository Settings** - Configure triggers and secrets
+
+-   **Dashboard** - All repositories and builds
+-   **Build History** - Past builds with status
+-   **Real-time Logs** - Watch builds as they happen
+-   **Pipeline View** - Step-by-step progress
+-   **Repository Settings** - Configure triggers and secrets
 
 ## 📊 Comparison with Alternatives
 
-| Feature | Woodpecker CI | Jenkins | GitHub Actions |
-|---------|---------------|---------|----------------|
-| GUI | ✅ Modern | ✅ Classic | ❌ No GUI |
-| Setup | ⭐ Easy | ⭐⭐⭐ Complex | ⭐⭐ Medium |
-| Kubernetes | ✅ Native | ⚠️ Via plugin | ❌ External |
-| Resource Usage | Light | Heavy | N/A (external) |
-| Best For | Your use case! | Enterprise | Simple projects |
+| Feature        | Woodpecker CI  | Jenkins        | GitHub Actions  |
+| -------------- | -------------- | -------------- | --------------- |
+| GUI            | ✅ Modern      | ✅ Classic     | ❌ No GUI       |
+| Setup          | ⭐ Easy        | ⭐⭐⭐ Complex | ⭐⭐ Medium     |
+| Kubernetes     | ✅ Native      | ⚠️ Via plugin  | ❌ External     |
+| Resource Usage | Light          | Heavy          | N/A (external)  |
+| Best For       | Your use case! | Enterprise     | Simple projects |
 
 ## 🆘 Support
 
-- Setup issues? → `docs/WOODPECKER_SETUP_GUIDE.md`
-- App config? → `docs/NEXTJS_WOODPECKER_EXAMPLE.md`
-- Architecture? → `docs/CI_CD_SETUP.md`
+-   Setup issues? → `docs/WOODPECKER_SETUP_GUIDE.md`
+-   App config? → `docs/NEXTJS_WOODPECKER_EXAMPLE.md`
+-   Architecture? → `docs/CI_CD_SETUP.md`
 
 ## 📝 Notes
 
-- Woodpecker CI is the open-source fork of Drone CI
-- Works great with Flux (your existing GitOps tool)
-- All builds run in your cluster (no external dependencies)
-- Perfect for Next.js static and server-side rendering
-
+-   Woodpecker CI is the open-source fork of Drone CI
+-   Works great with Flux (your existing GitOps tool)
+-   All builds run in your cluster (no external dependencies)
+-   Perfect for Next.js static and server-side rendering

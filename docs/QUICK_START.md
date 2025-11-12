@@ -3,10 +3,11 @@
 ## 🎯 What You're Getting
 
 A complete CI/CD setup with:
-- **Web GUI** (Woodpecker CI) to see builds and logs
-- **Auto-deploy** when you push to main branch
-- **PR previews** - automatic preview URLs for pull requests
-- **Simple setup** - everything runs in your cluster
+
+-   **Web GUI** (Woodpecker CI) to see builds and logs
+-   **Auto-deploy** when you push to main branch
+-   **PR previews** - automatic preview URLs for pull requests
+-   **Simple setup** - everything runs in your cluster
 
 ## 📋 Quick Setup (5 Steps)
 
@@ -15,9 +16,9 @@ A complete CI/CD setup with:
 1. Go to: https://github.com/settings/developers
 2. Click "New OAuth App"
 3. Fill in:
-   - Name: `Woodpecker CI`
-   - Homepage: `https://woodpecker.sk8server.me`
-   - Callback: `https://woodpecker.sk8server.me/authorize`
+    - Name: `Woodpecker CI`
+    - Homepage: `https://woodpecker.sk8server.me`
+    - Callback: `https://woodpecker.sk8server.me/authorize`
 4. Save the **Client ID** and **Client Secret**
 
 ### 2. Generate Secrets
@@ -30,11 +31,13 @@ openssl rand -hex 32
 ### 3. Configure Secret File
 
 Edit `kubernetes/apps/ci-cd/woodpecker/app/secret.sops.yaml`:
-- Replace `your-github-client-id` with your Client ID
-- Replace `your-github-client-secret` with your Client Secret
-- Replace `your-random-secret-here` with the generated secret
+
+-   Replace `your-github-client-id` with your Client ID
+-   Replace `your-github-client-secret` with your Client Secret
+-   Replace `your-random-secret-here` with the generated secret
 
 Then encrypt:
+
 ```bash
 sops --encrypt --in-place kubernetes/apps/ci-cd/woodpecker/app/secret.sops.yaml
 ```
@@ -59,16 +62,16 @@ Flux will automatically deploy it!
 ## 🚀 That's It!
 
 Now when you:
-- **Push to main** → Builds and deploys automatically
-- **Open a PR** → Creates preview environment at `pr-123.your-app.sk8server.me`
+
+-   **Push to main** → Builds and deploys automatically
+-   **Open a PR** → Creates preview environment at `pr-123.your-app.sk8server.me`
 
 ## 📚 More Details
 
-- Full setup guide: `docs/WOODPECKER_SETUP_GUIDE.md`
-- Next.js example: `docs/NEXTJS_WOODPECKER_EXAMPLE.md`
-- General CI/CD info: `docs/CI_CD_SETUP.md`
+-   Full setup guide: `docs/WOODPECKER_SETUP_GUIDE.md`
+-   Next.js example: `docs/NEXTJS_WOODPECKER_EXAMPLE.md`
+-   General CI/CD info: `docs/CI_CD_SETUP.md`
 
 ## 🆘 Need Help?
 
 Check the troubleshooting section in `docs/WOODPECKER_SETUP_GUIDE.md`
-
