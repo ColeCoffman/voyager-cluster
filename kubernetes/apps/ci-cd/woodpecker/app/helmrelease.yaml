@@ -6,7 +6,7 @@ metadata:
   namespace: ci-cd
 spec:
   chartRef:
-    kind: HelmRepository
+    kind: OCIRepository
     name: woodpecker
     namespace: ci-cd
   releaseName: woodpecker
