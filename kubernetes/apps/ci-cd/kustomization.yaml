@@ -1,16 +1,12 @@
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1
+apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-metadata:
-  name: ci-cd
-  namespace: flux-system
-spec:
-  interval: 1h
-  path: ./kubernetes/apps/ci-cd
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  wait: false
+namespace: ci-cd
+
+components:
+  - ../../components/sops
+
+resources:
+  - ./namespace.yaml
+  - ./woodpecker/ks.yaml
 
